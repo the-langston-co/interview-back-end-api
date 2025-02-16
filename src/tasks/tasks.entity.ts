@@ -13,12 +13,11 @@ export class Task {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({nullable: true})
-  description!: string|null;
+  @Column({ type: 'text', nullable: true })
+  description!: string | null;
 
-  @Column({type: 'date', nullable: true})
-  dueDate: Date|null;
-
+  @Column({ type: 'date', nullable: true })
+  dueDate: Date | null;
 
   @Column({ default: 'pending' })
   status!: string;
