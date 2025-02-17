@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { createZodDto } from 'nestjs-zod';
 
 // Define the Zod schema for creating a task
 export const CreateTaskDtoSchema = z.object({
@@ -8,4 +9,4 @@ export const CreateTaskDtoSchema = z.object({
 });
 
 // Generate the DTO type from Zod schema
-export type CreateTaskDto = z.infer<typeof CreateTaskDtoSchema>;
+export class CreateTaskDto extends createZodDto(CreateTaskDtoSchema) {}

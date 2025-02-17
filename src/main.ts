@@ -16,10 +16,9 @@ bootstrap();
 
 async function setupSwagger(app: INestApplication) {
   const config = new DocumentBuilder()
-    .setTitle('Langston API - Code Exercise')
+    .setTitle('Langston Code Exercise API')
     // .setDescription('The  API description')
     .setVersion('1.0')
-    .addTag('Langston')
     .addBearerAuth(
       { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
       'access-token',

@@ -1,10 +1,7 @@
-import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { TasksService } from './tasks.service';
-import { AuthGuard } from '@nestjs/passport';
 import { CreateTaskDto } from './dto/task.dto';
-import { ApiBearerAuth } from '@nestjs/swagger';
 
-@ApiBearerAuth()
 @Controller('tasks')
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
@@ -16,7 +13,6 @@ export class TasksController {
   }
 
   // Protected route: create a new task (requires JWT)
-  @UseGuards(AuthGuard('jwt'))
   @Post()
   create(@Body() task: CreateTaskDto) {
     return this.tasksService.create(task);
