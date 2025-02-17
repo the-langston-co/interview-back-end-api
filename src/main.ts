@@ -3,18 +3,21 @@ import { AppModule } from './app.module';
 import { INestApplication, Logger } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { patchNestJsSwagger } from 'nestjs-zod';
+import { OperationObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 
 const logger = new Logger('main');
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await setupSwagger(app);
+  setupSwagger(app);
   const port = process.env.PORT ?? 3005;
   logger.debug(`Starting server on http://localhost:${port}`);
   await app.listen(port);
 }
-bootstrap();
 
-async function setupSwagger(app: INestApplication) {
+bootstrap().catch((e) => console.error(e, 'bootstrapping error'));
+
+function setupSwagger(app: INestApplication) {
   const config = new DocumentBuilder()
     .setTitle('Langston Code Exercise API')
     // .setDescription('The  API description')
@@ -35,7 +38,10 @@ async function setupSwagger(app: INestApplication) {
       if (path.startsWith('/auth')) return;
 
       Object.keys(methods).forEach((method) => {
-        methods[method].security = [{ 'access-token': [] }];
+        const item = methods[method] as OperationObject;
+        if (item) {
+          item.security = [{ 'access-token': [] }];
+        }
       });
     });
 

@@ -34,13 +34,12 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     return super.canActivate(context);
   }
 
-  handleRequest(err, user, info) {
-    this.logger.log(`handleRequest: ${JSON.stringify({ err, user, info })}`);
+  handleRequest(err, user) {
     // You can throw an exception based on either "info" or "err" arguments
     if (err || !user) {
       throw err || new UnauthorizedException();
     }
-    this.clsService.set('user_id', user.userId);
+    this.clsService.set('user_id', (user as { userId: number }).userId);
 
     return user;
   }
