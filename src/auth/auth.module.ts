@@ -5,13 +5,14 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { UsersModule } from '../users/users.module';
 import { JwtStrategy } from './jwt.strategy';
+import { jwtConstants } from './constants';
 
 @Module({
   imports: [
     UsersModule,
-    PassportModule,
+    PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
-      secret: 'secret-key',
+      secret: jwtConstants.secret,
       signOptions: { expiresIn: '1h' },
     }),
   ],

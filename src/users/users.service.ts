@@ -18,4 +18,8 @@ export class UsersService {
     const newUser = this.userRepository.create({ username, password });
     return this.userRepository.save(newUser);
   }
+
+  findAll() {
+    return this.userRepository.find();
+  }
 }

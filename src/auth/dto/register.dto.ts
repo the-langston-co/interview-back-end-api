@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { createZodDto } from 'nestjs-zod';
 
 // Define the Zod schema for user registration
 export const RegisterDtoSchema = z
@@ -15,4 +16,4 @@ export const RegisterDtoSchema = z
   });
 
 // Infer the RegisterDto Type
-export type RegisterDto = z.infer<typeof RegisterDtoSchema>;
+export class RegisterDto extends createZodDto(RegisterDtoSchema) {}

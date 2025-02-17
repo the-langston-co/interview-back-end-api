@@ -1,20 +1,14 @@
-import {
-  Controller,
-  Post,
-  Body,
-  UseGuards,
-  Request,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Body, Controller, Post, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
-import { AuthGuard } from '@nestjs/passport';
+import { Public } from './public.metadata';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Public()
   @Post('login')
   async login(@Body() loginDto: LoginDto) {
     const user = await this.authService.validateUser(
@@ -27,6 +21,7 @@ export class AuthController {
     return this.authService.login(user);
   }
 
+  @Public()
   @Post('register')
   async register(@Body() registerDto: RegisterDto) {
     return this.authService.register(

@@ -6,7 +6,7 @@ export class ProfileController {
   // Protected route: return profile details of the authenticated user
   @UseGuards(AuthGuard('jwt'))
   @Get()
-  getProfile(@Request() req: any): any {
+  getProfile(@Request() req: any) {
     return req.user;
   }
 }

@@ -2,7 +2,9 @@ import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { AuthGuard } from '@nestjs/passport';
 import { CreateTaskDto } from './dto/task.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
+@ApiBearerAuth()
 @Controller('tasks')
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
