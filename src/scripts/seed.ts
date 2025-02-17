@@ -8,7 +8,7 @@ async function bootstrap() {
     const app = await NestFactory.createApplicationContext(AppModule);
 
     const seedService = app.get(SeedService);
-    await seedService.seed();
+    await seedService.resetDatabase();
 
     console.log('Seeding complete!');
     await app.close();

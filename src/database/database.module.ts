@@ -1,5 +1,6 @@
 import { Global, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 @Global()
 @Module({
@@ -11,6 +12,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         // entities: [__dirname + '/../**/*.entity{.ts,.js}'], // Globally load all entities
         synchronize: true, // Auto-sync entities with DB schema in dev environments
         autoLoadEntities: true,
+        namingStrategy: new SnakeNamingStrategy(),
       }),
     }),
   ],

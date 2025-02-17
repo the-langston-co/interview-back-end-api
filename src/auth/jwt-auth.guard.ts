@@ -40,7 +40,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     if (err || !user) {
       throw err || new UnauthorizedException();
     }
-    this.clsService.set('user_id', user.id);
+    this.clsService.set('user_id', user.userId);
 
     return user;
   }

@@ -1,34 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../users/users.entity';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
-export class SeedService {
+export class SeedService implements OnModuleInit {
+  private logger = new Logger(SeedService.name);
+
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
   ) {}
 
   // This method runs automatically when the app starts
-  // async onModuleInit() {
-  //   await this.seed();
-  // }
+  async onModuleInit() {
+    await this.seed();
+  }
+
+  async resetDatabase() {
+    this.logger.debug('Resetting database...');
+    await this.reset();
+    await this.seed();
+  }
 
   // Seed logic: populate the database with data
   async seed(attempt: number = 0) {
     const userCount = await this.userRepository.count();
     if (userCount === 0) {
-      console.log('Seeding database...');
+      this.logger.debug('Seeding database...');
       await this.createUsers();
-      console.log('Seeding complete!');
+      this.logger.debug('Seeding complete!');
     } else if (attempt < 1) {
-      console.log('Database already seeded...resetting database');
-      await this.reset();
-      await this.seed(attempt + 1);
-    } else {
-      console.log('Database already seeded and failed to reset...exiting');
+      this.logger.debug('Database already seeded!');
     }
   }
 

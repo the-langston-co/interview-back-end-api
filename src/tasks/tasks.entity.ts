@@ -5,6 +5,7 @@ import {
   ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
+  JoinColumn,
 } from 'typeorm';
 import { User } from '../users/users.entity';
 
@@ -12,6 +13,9 @@ import { User } from '../users/users.entity';
 export class Task {
   @PrimaryGeneratedColumn()
   id!: number;
+
+  @Column({ type: 'text', nullable: true })
+  title: string | null;
 
   @Column({ type: 'text', nullable: true })
   description!: string | null;
@@ -22,7 +26,11 @@ export class Task {
   @Column({ default: 'pending' })
   status!: string;
 
+  @Column()
+  userId: number;
+
   @ManyToOne(() => User, (user) => user.tasks, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'user_id' })
   user!: User;
 
   @CreateDateColumn()
