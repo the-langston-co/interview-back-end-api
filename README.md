@@ -33,7 +33,8 @@ Follow the instructions in **Project Setup** to get up and running, then work th
 
 ## Installation
 
-**Note!** This project requires `Node v20`.
+> [!Note]
+> This project requires `Node v20`.
 
 ```bash
 $ npm install
